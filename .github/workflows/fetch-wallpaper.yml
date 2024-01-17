@@ -22,7 +22,9 @@ jobs:
         run: pip install requests
 
       - name: Set up environment variables
-        run: echo "UNSPLASH_ACCESS_KEY=${{ secrets.UNSPLASH_ACCESS_KEY }}" >> $GITHUB_ENV
+        run: |
+          echo "UNSPLASH_ACCESS_KEY=${{ secrets.UNSPLASH_ACCESS_KEY }}" >> $GITHUB_ENV
+          echo "ACCESS_TOKEN=${{ secrets.ACCESS_TOKEN }}" >> $GITHUB_ENV
 
       - name: Run script
         run: python fetch_wallpaper.py
@@ -33,4 +35,4 @@ jobs:
           git config --local user.name "VolatileX1"
           git add .
           git commit -m "Add new wallpaper"
-          git push origin HEAD
+          git push origin HEAD:${{ github.ref }}  # Use ACCESS_TOKEN for authentication
