@@ -2,7 +2,7 @@ name: Fetch Wallpaper
 
 on:
   schedule:
-    - cron: '0 * * * *'  # Run every hour
+    - cron: '0 */4 * * *'  # Run every 4 hours
   workflow_dispatch:  # Manual trigger
 
 jobs:
