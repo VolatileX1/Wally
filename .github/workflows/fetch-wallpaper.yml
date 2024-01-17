@@ -1,0 +1,36 @@
+name: Fetch Wallpaper
+
+on:
+  schedule:
+    - cron: '0 * * * *'  # Run every hour
+  workflow_dispatch:  # Manual trigger
+
+jobs:
+  fetch-wallpaper:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.x
+
+      - name: Install dependencies
+        run: pip install requests
+
+      - name: Set up environment variables
+        run: echo "UNSPLASH_ACCESS_KEY=${{ secrets.UNSPLASH_ACCESS_KEY }}" >> $GITHUB_ENV
+
+      - name: Run script
+        run: python fetch_wallpaper.py
+
+      - name: Commit and push changes
+        run: |
+          git config --local user.email "128452078+VolatileX1@users.noreply.github.com"
+          git config --local user.name "VolatileX1"
+          git add .
+          git commit -m "Add new wallpaper"
+          git push
